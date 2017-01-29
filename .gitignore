@@ -1,5 +1,6 @@
 ## General
-
+# Nohup
+nohup.out
 # Compiled Object files
 *.slo
 *.lo
@@ -57,6 +58,7 @@ Makefile.config
 # 2. custom, and live on their own unless they're deliberated contributed
 data/*
 models/*
+model/*
 *.caffemodel
 *.solverstate
 *.binaryproto

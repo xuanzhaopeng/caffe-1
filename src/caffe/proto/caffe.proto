@@ -2,6 +2,10 @@ syntax = "proto2";
 
 package caffe;
 
+message BlobShape {
+  repeated int64 dim = 1 [packed = true];
+}
+
 message BlobProto {
   optional int32 num = 1 [default = 0];
   optional int32 channels = 2 [default = 0];
@@ -207,7 +211,7 @@ message NetStateRule {
 // NOTE
 // Update the next available ID when you add a new LayerParameter field.
 //
-// LayerParameter next available ID: 51 (last added: select_seg_binary_param)
+// LayerParameter next available ID: 52 (last added: reshape_param)
 message LayerParameter {
   repeated string bottom = 2; // the name of the bottom blobs
   repeated string top = 3; // the name of the top blobs
@@ -228,7 +232,7 @@ message LayerParameter {
   // line above the enum. Update the next available ID when you add a new
   // LayerType.
   //
-  // LayerType next available ID: 54 (last added: DROPOUT_CHANNEL)
+  // LayerType next available ID: 54 (last added: RESHAPE)
   enum LayerType {
     // "NONE" layer type is 0th enum element so that we don't cause confusion
     // by defaulting to an existent LayerType (instead, should usually error if
@@ -287,6 +291,7 @@ message LayerParameter {
     WINDOW_SEG_BINARY = 51;
     WINDOW_INST_SEG_DATA = 48;
     THRESHOLD = 31;
+    RESHAPE = 54;
   }
   optional LayerType type = 5; // the layer type from the enum above
 
@@ -351,6 +356,7 @@ message LayerParameter {
   optional UnpoolingParameter unpooling_param = 44;
   optional WindowClsDataParameter window_cls_data_param = 49;
   optional WindowDataParameter window_data_param = 20;
+  optional ReshapeParameter reshape_param = 51;
 
   // Parameters for data pre-processing.
   optional TransformationParameter transform_param = 36;
@@ -367,6 +373,19 @@ message LayerParameter {
   // This should never be used by any code except to upgrade to the new
   // LayerParameter specification.
   optional V0LayerParameter layer = 1;
+}
+
+// Message that stores parameters used by ReshapeLayer
+message ReshapeParameter {
+  // Specify the output dimensions. If some of the following parameters are
+  // omitted or set to 0 explicitly, the corresponding dimension from the bottom
+  // layer is used (unchanged). Also, if exactly one of them is set to -1, its
+  // value is calculated from the count of the bottom layer and the remaining
+  // dimensions, if possible.
+  optional int32 num = 1 [default = 0];
+  optional int32 channels = 2 [default = 0];
+  optional int32 height = 3 [default = 0];
+  optional int32 width = 4 [default = 0];
 }
 
 // Message that stores parameters used to apply transformation

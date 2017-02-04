@@ -8,3 +8,10 @@ cudnn R1 - ONLY could build with R1
 
 # CUDA
 cuda 7.5
+
+## Build by CPU mode
+https://github.com/BVLC/caffe/issues/1284
+> Python related issue on centos: https://github.com/BVLC/caffe/issues/1284
+
+## Build by GPU mode
+https://github.com/BVLC/caffe/wiki/Install-Caffe-on-EC2-from-scratch-(Ubuntu,-CUDA-7,-cuDNN-3)
